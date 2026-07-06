@@ -6,8 +6,8 @@ const HttpError     = require('../models/errorModel');
 //============================== CREATE NEW POST
 const createPost = async (req, res, next) => {
   try {
-    let { title, category, description } = req.body;
-    if (!title || !category || !description) {
+    let { title, category, content } = req.body;
+    if (!title || !category || !content) {
       return next(new HttpError("Preencha todos os campos.", 422));
     }
 
@@ -16,9 +16,9 @@ const createPost = async (req, res, next) => {
 
     // Se não houver arquivo enviado, usa a thumb padrão mas gera nome único
     if (!req.files || !req.files.thumbnail) {
-      let fileName = "default-thumbnail.png";
-      let splittedFilename = fileName.split('.');
-      newFilename = splittedFilename[0] + uuid() + "." + splittedFilename[splittedFilename.length - 1];
+      let fileName          = "default-thumbnail.png";
+      let splittedFilename  = fileName.split('.');
+      newFilename           = splittedFilename[0] + uuid() + "." + splittedFilename[splittedFilename.length - 1];
 
       // Copia o arquivo padrão para um novo nome dentro de uploads
       fs.copyFileSync(
@@ -28,7 +28,7 @@ const createPost = async (req, res, next) => {
 
       const [result] = await db.query(
         "INSERT INTO posts (title, category, content, thumbnail, user_id) VALUES (?, ?, ?, ?, ?)",
-        [title, category, description, newFilename, req.user.id]
+        [title, category, content, newFilename, req.user.id]
       );
 
       if (!result.insertId) {
@@ -39,7 +39,7 @@ const createPost = async (req, res, next) => {
         id: result.insertId,
         title,
         category,
-        description,
+        content,
         thumbnail: newFilename,
         creator: req.user.id
       });
@@ -61,7 +61,7 @@ const createPost = async (req, res, next) => {
       } else {
         const [result] = await db.query(
           "INSERT INTO posts (title, category, content, thumbnail, user_id) VALUES (?, ?, ?, ?, ?)",
-          [title, category, description, newFilename, req.user.id]
+          [title, category, content, newFilename, req.user.id]
         );
 
         if (!result.insertId) {
@@ -72,7 +72,7 @@ const createPost = async (req, res, next) => {
           id: result.insertId,
           title,
           category,
-          description,
+          content,
           thumbnail: newFilename,
           creator: req.user.id
         });

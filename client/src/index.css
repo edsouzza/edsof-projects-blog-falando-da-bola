@@ -244,7 +244,8 @@ nav {
 }
 
 .nav__logo {
-  width: 2.6rem;
+  width: 8rem;
+  display: flex;
 }
 
 .nav__menu {

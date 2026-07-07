@@ -1,24 +1,24 @@
-import React from 'react';
+import React    from 'react';
 import ReactDOM from 'react-dom/client';
 
 import {createBrowserRouter, RouterProvider} from 'react-router-dom'
 
-import Layout from './components/Layout';
-import Home from './pages/Home';
-import ErrorPage from './pages/ErrorPage';
-import PostDetail from './pages/PostDetail';
-import Register from './pages/Register';
-import Login from './pages/Login';
-import CreatePost from './pages/CreatePost';
-import EditPost from './pages/EditPost';
-import './index.css';
-import CategoryPosts from './pages/CategoryPosts';
-import AuthorPosts from './pages/AuthorPosts';
-import UserProvider from './context/userContext';
-import Logout from './pages/Logout';
-import UserProfile from './pages/UserProfile';
-import Authors from './pages/Authors';
-import Dashboard from './pages/Dashboard';
+import Layout from            './components/Layout';
+import Home from              './pages/Home';
+import ErrorPage from         './pages/ErrorPage';
+import PostDetail from        './pages/PostDetail';
+import Register from          './pages/Register';
+import Login from             './pages/Login';
+import CreatePost from        './pages/CreatePost';
+import EditPost from          './pages/EditPost';
+import                        './index.css';
+import CategoryPosts from     './pages/CategoryPosts';
+import AuthorPosts from       './pages/AuthorPosts';
+import UserProvider from      './context/userContext';
+import Logout from            './pages/Logout';
+import UserProfile from       './pages/UserProfile';
+import Authors from           './pages/Authors';
+import Dashboard from         './pages/Dashboard';
 
 
 

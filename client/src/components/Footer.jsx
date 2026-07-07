@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
@@ -15,7 +14,7 @@ const Footer = () => {
         <li><Link to="/posts/categories/Weather">Weather</Link></li>
       </ul>
       <div className="footer__copyright">
-        <small>All Rights Reserved &copy; Copyright, EGATOR Tutorials</small>
+        <small>All Rights Reserved &copy; Copyright, EDSOF INFORMÁTICA</small>
       </div>
     </footer>
   );

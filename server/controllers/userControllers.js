@@ -84,7 +84,9 @@ const getUser = async (req, res, next) => {
   try {
     const db = req.app.locals.db;
     const [rows] = await db.query(`
-      SELECT u.id, u.name, u.email, u.avatar, u.created_at, COUNT(p.id) AS total_posts
+      SELECT u.id, u.name, u.email, u.avatar, 
+      u.created_at AS createdAt, 
+      COUNT(p.id) AS total_posts
       FROM users u
       LEFT JOIN posts p ON u.id = p.user_id
       WHERE u.id = ?
@@ -109,41 +111,6 @@ const logoutUser = (req, res, next) => {
 };
 
 //============================== CHANGE AVATAR
-// const changeAvatar = async (req, res, next) => {
-//   try {
-//     if (!req.files || !req.files.avatar) {
-//       return next(new HttpError("Algo deu errado!", 422));
-//     }
-
-//     const db = req.app.locals.db;
-//     const [rows] = await db.query("SELECT avatar FROM users WHERE id = ?", [req.user.id]);
-//     const user = rows[0];
-
-//     if (user && user.avatar) {
-//       fs.unlink(path.join(__dirname, '..', 'uploads', user.avatar), (err) => {
-//         if (err) console.error(err);
-//       });
-//     }
-
-//     const { avatar } = req.files;
-//     if (avatar.size > 500000) {
-//       return next(new HttpError("Foto de perfil muito grande. O tamanho do arquivo deve ser inferior a 500 KB."));
-//     }
-
-//     let fileName = avatar.name;
-//     let splittedFilename = fileName.split('.');
-//     let newFilename = splittedFilename[0] + uuid() + "." + splittedFilename[splittedFilename.length - 1];
-
-//     avatar.mv(path.join(__dirname, '..', 'uploads', newFilename), async (err) => {
-//       if (err) return next(new HttpError(err));
-
-//       await db.query("UPDATE users SET avatar = ? WHERE id = ?", [newFilename, req.user.id]);
-//       res.status(200).json({ avatar: newFilename });
-//     });
-//   } catch (error) {
-//     return next(new HttpError(error));
-//   }
-// };
 const changeAvatar = async (req, res, next) => {
   try {
     const db = req.app.locals.db;
@@ -255,7 +222,9 @@ const getAuthors = async (req, res, next) => {
   try {
     const db = req.app.locals.db;
     const [authors] = await db.query(`
-      SELECT u.id, u.name, u.email, u.avatar, u.created_at, COUNT(p.id) AS total_posts
+      SELECT u.id, u.name, u.email, u.avatar, 
+      u.created_at AS createdAt,  
+      COUNT(p.id) AS total_posts
       FROM users u
       LEFT JOIN posts p ON u.id = p.user_id
       GROUP BY u.id

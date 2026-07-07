@@ -14,7 +14,7 @@ const DUMMY_POSTS = [
     thumbnail: Thumbnail1,
     category: 'education',
     title: 'This is the title of the very first post on this blog.',
-    desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat dolor dolorum est ratione alias inventore sed, blanditiis suscipit facilis quis quas, molestiae totam quibusdam Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+    description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat dolor dolorum est ratione alias inventore sed, blanditiis suscipit facilis quis quas, molestiae totam quibusdam Lorem ipsum dolor sit amet consectetur adipisicing elit.',
     authorID: 3
   },
   {
@@ -22,7 +22,7 @@ const DUMMY_POSTS = [
     thumbnail: Thumbnail2,
     category: 'science',
     title: 'This is the title of the very second post on this blog.',
-    desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat dolor dolorum est ratione alias inventore sed, blanditiis suscipit facilis quis quas, molestiae totam quibusdam Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+    description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat dolor dolorum est ratione alias inventore sed, blanditiis suscipit facilis quis quas, molestiae totam quibusdam Lorem ipsum dolor sit amet consectetur adipisicing elit.',
     authorID: 1
   },
   {
@@ -30,7 +30,7 @@ const DUMMY_POSTS = [
     thumbnail: Thumbnail3,
     category: 'weather',
     title: 'This is the title of the very third post on this blog.',
-    desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat dolor dolorum est ratione alias inventore sed, blanditiis suscipit facilis quis quas, molestiae totam quibusdam Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+    description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat dolor dolorum est ratione alias inventore sed, blanditiis suscipit facilis quis quas, molestiae totam quibusdam Lorem ipsum dolor sit amet consectetur adipisicing elit.',
     authorID: 13
   },
   {
@@ -38,11 +38,10 @@ const DUMMY_POSTS = [
     thumbnail: Thumbnail4,
     category: 'farming',
     title: 'This is the title of the very last post on this blog.',
-    desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat dolor dolorum est ratione alias inventore sed, blanditiis suscipit facilis quis quas, molestiae totam quibusdam Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+    description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat dolor dolorum est ratione alias inventore sed, blanditiis suscipit facilis quis quas, molestiae totam quibusdam Lorem ipsum dolor sit amet consectetur adipisicing elit.',
     authorID: 11
   },
 ]
-
 
 const Posts = () => {
   const [posts, setPosts] = useState([])
@@ -70,11 +69,26 @@ const Posts = () => {
 
   return (
       <section className="posts">
-          {posts.length ? <div className="container posts__container">
-              {
-                posts.map(({_id:id, thumbnail, category, title, description, creator, createdAt}) => <PostItem key={id} postID={id} thumbnail={thumbnail} category={category} title={title} description={description} authorID={creator} createdAt={createdAt}/>)
-              }
-          </div> : <h2 className='center'>No Posts Found.</h2>}
+          {posts.length ? (
+            <div className="container posts__container">
+             {console.log(posts)}
+
+             {posts.map(post => (
+                <PostItem
+                  key={post._id || post.id}
+                  postID={post._id || post.id}
+                  thumbnail={post.thumbnail}
+                  category={post.category}
+                  title={post.title || ""}
+                  description={post.description || ""}
+                  authorID={post.user_id}
+                  createdAt={post.created_at}
+                />
+              ))}
+            </div>
+          ) : (
+            <h2 className='center'>No Posts Found.</h2>
+          )}
       </section>
   )
 }

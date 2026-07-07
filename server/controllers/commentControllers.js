@@ -48,8 +48,7 @@ const editComment = async (req, res, next) => {
 
     const [rows]     = await db.query("SELECT * FROM comments WHERE id = ?", [commentID]);
     const oldComment = rows[0];
-    // const oldStatus  = rows[1];
-
+    
     if (req.user.id != oldComment.user_id) {
       return next(new HttpError("Não foi possível atualizar o comentário.", 403));
     }
@@ -57,7 +56,13 @@ const editComment = async (req, res, next) => {
     // Mantém valores antigos se não forem enviados | tipos : moderado | aprovado | reprovado
     // se o comentario foi alterado seu status volta para moderado
     content = content || oldComment.content;
-    status  = 'moderado';
+
+    // Se o conteúdo mudou, volta para "moderado" caso contrario, mantém o status antigo
+    if (content !== oldComment.content) {
+      status = 'moderado';
+    } else {
+      status = oldComment.status;
+    }
    
     await db.query(
       "UPDATE comments SET content = ?, status = ?, updated_at = NOW() WHERE id = ?",
